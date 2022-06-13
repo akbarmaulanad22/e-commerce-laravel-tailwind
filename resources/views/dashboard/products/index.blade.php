@@ -37,7 +37,7 @@
                                     <td class="p-4">{{ $product->price }}</td>
                                     <td class="p-4">{{ substr($product->description, 0, 40)  }}</td>
                                     <td class="p-4 flex flex-wrap justify-center lg:flex-nowrap">
-                                        <a href="{{ route('products.edit', $product->id) }}" class="w-full my-1 py-2 px-3 bg-yellow-400 rounded-full text-white lg:mx-1 ">Edit</a>
+                                        <a href="{{ route('products.edit', $product->id) }}" class="w-full my-1 py-2 px-6 bg-yellow-400 rounded-full text-white lg:mx-1 ">Edit</a>
                                         <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
