@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::where('user_id', auth()->user()->id)->get();
         return view('dashboard.products.index', compact('products'));
     }
 
@@ -55,6 +55,7 @@ class ProductController extends Controller
         
         
         $data = [
+            'user_id' => auth()->user()->id,
             'name' => $validation['name'],
             'category_id' => $validation['category_id'],
             'price' => $validation['price'],
@@ -100,6 +101,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        if ($product->user_id !== auth()->user()->id) {
+            abort(404);
+        }
         return view('dashboard.products.edit', compact('product'));
     }
 
