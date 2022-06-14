@@ -1,2 +1,5 @@
+- hide table section if count === 0
 - on mobile hidden description
 - add category include relationship with product
+- show product
+- search product / category with slug

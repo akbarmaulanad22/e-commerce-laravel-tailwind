@@ -1111,6 +1111,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
+.bg-sky-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(56 189 248 / var(--tw-bg-opacity));
+}
 .fill-current {
   fill: currentColor;
 }
@@ -1161,6 +1165,10 @@ select {
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+}
+.px-\[1\.40rem\] {
+  padding-left: 1.40rem;
+  padding-right: 1.40rem;
 }
 .py-12 {
   padding-top: 3rem;
@@ -1734,12 +1742,20 @@ select {
     margin-right: 0.25rem;
   }
 
+  .lg\:flex {
+    display: flex;
+  }
+
   .lg\:w-2\/3 {
     width: 66.666667%;
   }
 
   .lg\:flex-nowrap {
     flex-wrap: nowrap;
+  }
+
+  .lg\:justify-center {
+    justify-content: center;
   }
 
   .lg\:overflow-x-hidden {

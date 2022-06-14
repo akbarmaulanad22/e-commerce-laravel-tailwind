@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create');
+        $categories = Category::all();
+        
+        return view('dashboard.products.create', compact('categories'));
     }
 
     /**
@@ -36,14 +39,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // $array = explode(',', $request->category);
+        // $array = trim($array[0]);
+        // dd($array);
+
         $validation = $request->validate([
             'name' => 'required',
+            'category_id' => 'required|integer',
             'price' => 'required|integer',
             'description' => 'required|min:10',
         ]);
 
         $data = [
             'name' => $validation['name'],
+            'category_id' => $validation['category_id'],
             'price' => $validation['price'],
             'description' => $validation['description'],
         ];
