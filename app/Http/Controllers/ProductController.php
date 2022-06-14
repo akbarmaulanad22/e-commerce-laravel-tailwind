@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class ProductController extends Controller
 {
@@ -42,22 +45,38 @@ class ProductController extends Controller
         // $array = explode(',', $request->category);
         // $array = trim($array[0]);
         // dd($array);
-
+        
         $validation = $request->validate([
             'name' => 'required',
             'category_id' => 'required|integer',
             'price' => 'required|integer',
             'description' => 'required|min:10',
         ]);
-
+        
+        
         $data = [
             'name' => $validation['name'],
             'category_id' => $validation['category_id'],
             'price' => $validation['price'],
             'description' => $validation['description'],
         ];
+        
+        $product = Product::create($data);
 
-        Product::create($data);
+        // if ($request->hasFile('images')) {
+        //     $files = $request->file('images');
+        //     foreach ($files as $file) {
+        //         $path = Hash::make($file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        //         $request['product_id'] = $request->id;
+        //         $request['img'] = $path;
+        //         $file->move(public_path('/images'), $path);
+        //         Image::create([
+        //             'path' => $path,
+        //             'product_id' => $product->id,
+        //         ]);
+        //     }
+        // }
+        
         return redirect()->route('products.index')->with('success', 'Product created successfully');
 
     }
@@ -118,7 +137,14 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();   
+        $images = Image::where('product_id', $product->id)->get();
+        foreach ($images as $image) {
+            if(File::exists("images/".$image->path)) {
+                File::delete("images/".$image->path);
+            }
+        }
+        
+        $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }
 }

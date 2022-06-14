@@ -1,4 +1,5 @@
 - hide table section if count === 0
+- change select to dropdown
 - on mobile hidden description
 - add category include relationship with product
 - show product
