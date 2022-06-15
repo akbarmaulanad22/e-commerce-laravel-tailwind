@@ -1,6 +1,8 @@
-- hide table section if count === 0
+// - hide table section if count === 0
 - change select to dropdown
-- on mobile hidden description
-- add category include relationship with product
+// - on mobile hidden description
+// - add category include relationship with product
 - show product
 - search product / category with slug
+- relationship product with shop
+- relationship shop with user
