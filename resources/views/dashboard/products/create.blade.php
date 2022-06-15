@@ -24,7 +24,7 @@
                             </p>
                         @enderror
                     </div>
-                    {{-- <div class="w-full px-4 mb-8 pt-4 flex relative">
+                    <div class="w-full px-4 mb-8 pt-4 flex relative">
                         <input type="file" name="images[]"  class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500 text-sm text-slate-500
                                                     file:mr-4 file:py-2 file:px-4
                                                     file:rounded-full file:border-0
@@ -38,7 +38,7 @@
                                 {{ $message }}
                             </p>
                         @enderror
-                    </div> --}}
+                    </div>
                     <div class="w-full px-4 mb-8 pt-4 flex relative">
                         <select name="category_id" id="category_id" class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500">
                                 <option value="" selected disabled class="text-red-400 after:content-['*'] after:ml-0.5 after:text-red-700">Category</option>

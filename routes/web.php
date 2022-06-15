@@ -21,8 +21,8 @@ Route::get('/', function () {
 });
 
 
-Route::group(['middleware' => 'auth'], function(){
-    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function(){
+    Route::get('/', DashboardController::class)->name('dashboard');
     Route::resource('/products', ProductController::class);
     Route::resource('/categories', CategoryController::class);
 });

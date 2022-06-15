@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -64,21 +65,23 @@ class ProductController extends Controller
         
         $product = Product::create($data);
 
-        // if ($request->hasFile('images')) {
-        //     $files = $request->file('images');
-        //     foreach ($files as $file) {
-        //         $path = Hash::make($file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
-        //         $request['product_id'] = $request->id;
-        //         $request['img'] = $path;
-        //         $file->move(public_path('/images'), $path);
-        //         Image::create([
-        //             'path' => $path,
-        //             'product_id' => $product->id,
-        //         ]);
-        //     }
-        // }
+        if ($request->hasFile('images')) {
+            $file = $request->file('images');
+            foreach ($request->file('images') as $file) {
+                $path = time().'_'.$file->getClientOriginalName();
+                
+                $request['product_id'] = $product->id;
+                $request['path'] = $path;
+
+                $file->move(\public_path('/uploads/products'), $path); 
+                Image::create([
+                    'product_id' => $request['product_id'],
+                    'path' => $request['path'],
+                ]);
+            }
+        }
         
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+        return to_route('products.index')->with('success', 'Product created successfully');
 
     }
 
@@ -130,7 +133,7 @@ class ProductController extends Controller
 
         $product->update($data);
         
-        return redirect()->route('products.index')->with('success', 'Product updated successfully');
+        return to_route('products.index')->with('success', 'Product updated successfully');
     }
     
     /**
@@ -142,13 +145,13 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $images = Image::where('product_id', $product->id)->get();
-        foreach ($images as $image) {
-            if(File::exists("images/".$image->path)) {
-                File::delete("images/".$image->path);
+        foreach ($images as $image){
+            if (File::exists('uploads/products' . $image->path)) {
+                File::delete('uploads/products' . $image->path);
             }
         }
         
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+        return to_route('products.index')->with('success', 'Product deleted successfully');
     }
 }
