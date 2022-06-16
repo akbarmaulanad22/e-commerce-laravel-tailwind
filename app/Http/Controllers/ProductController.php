@@ -45,7 +45,7 @@ class ProductController extends Controller
     {
         // $array = explode(',', $request->category);
         // $array = trim($array[0]);
-        // dd($array);
+        // dd($request->file('images'));
         
         $validation = $request->validate([
             'name' => 'required',
@@ -66,7 +66,6 @@ class ProductController extends Controller
         $product = Product::create($data);
 
         if ($request->hasFile('images')) {
-            $file = $request->file('images');
             foreach ($request->file('images') as $file) {
                 $path = time().'_'.$file->getClientOriginalName();
                 
@@ -74,7 +73,7 @@ class ProductController extends Controller
                 $request['path'] = $path;
 
                 $file->move(\public_path('/uploads/products'), $path); 
-                Image::create([
+                $product->images()->create([
                     'product_id' => $request['product_id'],
                     'path' => $request['path'],
                 ]);
@@ -107,7 +106,9 @@ class ProductController extends Controller
         if ($product->user_id !== auth()->user()->id) {
             abort(404);
         }
-        return view('dashboard.products.edit', compact('product'));
+        $categories = Category::all();
+
+        return view('dashboard.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -132,6 +133,21 @@ class ProductController extends Controller
         ];
 
         $product->update($data);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = time().'_'.$file->getClientOriginalName();
+                
+                $request['product_id'] = $product->id;
+                $request['path'] = $path;
+
+                $file->move(\public_path('/uploads/products'), $path); 
+                Image::create([
+                    'product_id' => $request['product_id'],
+                    'path' => $request['path'],
+                ]);
+            }
+        }
         
         return to_route('products.index')->with('success', 'Product updated successfully');
     }
@@ -146,8 +162,8 @@ class ProductController extends Controller
     {
         $images = Image::where('product_id', $product->id)->get();
         foreach ($images as $image){
-            if (File::exists('uploads/products' . $image->path)) {
-                File::delete('uploads/products' . $image->path);
+            if (File::exists('uploads/products/' . $image->path)) {
+                File::delete('uploads/products/' . $image->path);
             }
         }
         
