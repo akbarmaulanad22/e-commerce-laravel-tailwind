@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -31,8 +30,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $sizes = Size::all();
         
-        return view('dashboard.products.create', compact('categories'));
+        return view('dashboard.products.create', compact('categories', 'sizes'));
     }
 
     /**
@@ -49,7 +49,9 @@ class ProductController extends Controller
         
         $validation = $request->validate([
             'name' => 'required',
+            'image' => 'required',
             'category_id' => 'required|integer',
+            'size' => 'required',
             'price' => 'required|integer',
             'description' => 'required|min:10',
         ]);
@@ -64,16 +66,17 @@ class ProductController extends Controller
         ];
         
         $product = Product::create($data);
+        $product->sizes()->attach($request->size);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $file) {
                 $path = time().'_'.$file->getClientOriginalName();
                 
                 $request['product_id'] = $product->id;
                 $request['path'] = $path;
 
                 $file->move(\public_path('/uploads/products'), $path); 
-                $product->images()->create([
+                Image::create([
                     'product_id' => $request['product_id'],
                     'path' => $request['path'],
                 ]);
@@ -107,8 +110,9 @@ class ProductController extends Controller
             abort(404);
         }
         $categories = Category::all();
+        $sizes = Size::all();
 
-        return view('dashboard.products.edit', compact('product', 'categories'));
+        return view('dashboard.products.edit', compact('product', 'categories', 'sizes'));
     }
 
     /**
@@ -120,22 +124,30 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        
         $validation = $request->validate([
             'name' => 'required',
+            'image' => 'required',
+            'category_id' => 'required|integer',
+            'size' => 'required',
             'price' => 'required|integer',
             'description' => 'required|min:10',
         ]);
-
+        
+        
         $data = [
+            'user_id' => auth()->user()->id,
             'name' => $validation['name'],
+            'category_id' => $validation['category_id'],
             'price' => $validation['price'],
             'description' => $validation['description'],
         ];
 
         $product->update($data);
+        $product->sizes()->sync($request->size);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $file) {
                 $path = time().'_'.$file->getClientOriginalName();
                 
                 $request['product_id'] = $product->id;
@@ -168,6 +180,8 @@ class ProductController extends Controller
         }
         
         $product->delete();
+        $product->sizes()->delete();
+        
         return to_route('products.index')->with('success', 'Product deleted successfully');
     }
 }

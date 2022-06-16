@@ -33,4 +33,12 @@
             </main>
         </div>
     </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script>
+      new TomSelect('#select-role', {
+        maxItems: 3,
+      });
+    </script>
+    
 </html>

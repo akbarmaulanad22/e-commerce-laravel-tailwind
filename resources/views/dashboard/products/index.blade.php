@@ -36,6 +36,7 @@
                                     <th class="bg-slate-500 p-3 rounded-tl-xl">Name</th>
                                     <th class="bg-slate-500 p-3">Category</th>
                                     <th class="bg-slate-500 p-3">Price</th>
+                                    <th class="bg-slate-500 p-3">Size</th>
                                     <th class="bg-slate-500 p-3">Description</th>
                                     <th class="bg-slate-500 p-3 rounded-tr-xl">Actions</th>
                                 </tr>
@@ -46,6 +47,15 @@
                                         <td class="p-4 text-center">{{ $product->name }}</td>
                                         <td class="p-4 text-center">{{ $product->category->name }}</td>
                                         <td class="p-4 text-center">{{ $product->price }}</td>
+                                        <td class="p-4 text-center">
+                                            @foreach ($product->sizes as $sizes)
+                                                @if ($loop->last)
+                                                    {{ $sizes->size }}
+                                                @else
+                                                    {{ $sizes->size }},
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td class="p-4 text-center">{{ substr($product->description, 0, 40)  }}</td>
                                         <td class="p-4 text-center lg:flex items-center lg:justify-center">
                                             <div class="my-2">

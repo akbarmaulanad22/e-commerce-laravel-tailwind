@@ -25,28 +25,41 @@
                         @enderror
                     </div>
                     <div class="w-full px-4 mb-8 pt-4 flex relative">
-                        <input type="file" name="images[]"  class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500 text-sm text-slate-500
+                        <input type="file" name="image[]"  class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500 text-sm text-slate-500
                                                     file:mr-4 file:py-2 file:px-4
                                                     file:rounded-full file:border-0
                                                     file:text-sm file:font-semibold
                                                     file:bg-violet-50 file:text-violet-700
                                                     hover:file:bg-violet-100
                                                     " multiple/>
-                        <label for="images[]" class="opacity-0 scale-0 font-bold absolute translate-y-3 translate-x-3 peer-focus:-translate-y-7 peer-focus:opacity-100 peer-focus:scale-100 transition-all duration-200  text-red-400 after:content-['*'] after:ml-0.5 after:text-red-700">Name</label>
-                        @error('images[]')
+                        <label for="image[]" class="opacity-0 scale-0 font-bold absolute translate-y-3 translate-x-3 peer-focus:-translate-y-7 peer-focus:opacity-100 peer-focus:scale-100 transition-all duration-200  text-red-400 after:content-['*'] after:ml-0.5 after:text-red-700">Image</label>
+                        @error('image')
+                            <p class="absolute text-red-500 py-3 font-bold translate-y-12 translate-x-3">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="w-full px-4 mb-8 pt-4 flex relative">
+                        <select class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500" name="category_id">
+                            <option selected disabled>Choose category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
                             <p class="absolute text-red-500 pb-3 font-bold translate-y-12 translate-x-3">
                                 {{ $message }}
                             </p>
                         @enderror
                     </div>
                     <div class="w-full px-4 mb-8 pt-4 flex relative">
-                        <select name="category_id" id="category_id" class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500">
-                                <option value="" selected disabled class="text-red-400 after:content-['*'] after:ml-0.5 after:text-red-700">Category</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <select multiple class="w-full bg-slate-200 peer placeholder:font-semibold placeholder:text-red-400  text-dark p-3 rounded-md border-none focus:ring-0 focus:placeholder:opacity-0 transition-all duration-500" name="size[]">
+                            @foreach ($sizes as $size)
+                                <option value="{{ $size->id }}"
+                                >{{ $size->size }}</option>
                             @endforeach
                         </select>
-                        @error('category_id')
+                        @error('size')
                             <p class="absolute text-red-500 pb-3 font-bold translate-y-12 translate-x-3">
                                 {{ $message }}
                             </p>
