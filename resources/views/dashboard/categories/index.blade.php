@@ -10,8 +10,16 @@
                 <div class="w-full mx-auto text-center mb-20">
                     <h2 class="font-bold text-dark text-3xl my-4 sm:text-4xl lg:text-3xl">All category</h2>
                 </div>
-                <div class="w-full mb-10 mx-auto text-center lg:mx-0 lg:text-start">
-                    <a href="{{ route('categories.create') }}" class="py-2 px-4 bg-red-400 rounded-full text-white">Add new category</a>
+                <div class="w-full mb-10 lg:text-start flex">
+                    <div class="mx-auto w-1/2">
+                        <a href="{{ route('categories.create') }}" class="inline-block py-2 px-4 bg-red-400 rounded-full text-white">Add new category</a>
+                    </div>
+                    <div class="mx-auto w-1/2 flex">
+                        <form action="{{ route('categories.index') }}" method="GET">
+                            <input type="text" placeholder="Name" name="name"  class="py-2 px-4 rounded-full focus:placeholder:opacity-0 transition-all duration-500" value="{{ old('productName') ?? '' }}">
+                            <button type="submit" class="py-2 px-4 bg-teal-400 rounded-full text-white">Search</button>
+                        </form>
+                    </div>
                 </div>
                 @if (session('success'))
                     <div class="w-full mx-auto my-12">

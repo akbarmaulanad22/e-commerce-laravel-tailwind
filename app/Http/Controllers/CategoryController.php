@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::search(request()->name)->get();
         return view('dashboard.categories.index', compact('categories'));
     }
 
