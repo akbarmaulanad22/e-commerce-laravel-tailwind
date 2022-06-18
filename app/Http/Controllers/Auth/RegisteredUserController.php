@@ -43,7 +43,10 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
+        ])->assignRole('Seller');
+
+        $permissions = $user->getPermissionsViaRoles();
+        $user->givePermissionTo($permissions);
 
         event(new Registered($user));
 
