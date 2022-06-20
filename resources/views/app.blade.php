@@ -94,24 +94,24 @@
 
     {{-- Product menu --}}
     <div class="container mx-auto px-5 md:px-0 my-12">
-        <h2 class="mb-32 mt-24 text-4xl text-center  font-semibold text-slate-800 md:text-5xl">Latest Products</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3 md:px-6">
+        <h2 class="mb-24 mt-14 text-4xl text-center  font-semibold text-slate-800 md:text-5xl">Latest Products</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 px-0 max-w-2xl mx-auto lg:max-w-none lg:px-16">
             @foreach ($products as $product)
             @if ($loop->iteration === 6)
                 @break
             @endif
-            <div class="w-full max-w-xs h-[30rem] mx-auto mb-2 rounded-lg shadow-lg overflow-hidden bg-slate-100">
+            <div class="w-full max-w-xs h-[32rem] lg:h-[35rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10">
                 <img class="w-full h-72"
                     src="https://source.unsplash.com/300x400"
                     alt="product" />
                 <div class="px-6 py-4">
-                    <p class="leading-normal text-gray-700 text-sm font-semibold my-3">
+                    <p class="leading-normal text-gray-700 text-sm font-semibold my-4 lg:my-6">
                         <span class="rounded-full bg-slate-300 py-1 px-2">
                             {{ $product->category->name }}
                         </span>
                     </p>
-                    <h4 class="text-lg font-semibold tracking-tight text-gray-800 my-2">{{ $product->name }}</h4>
-                    <p class="leading-normal text-gray-700 text-2xl my-2">{{ $product->price }}</p>
+                    <h4 class="text-lg font-semibold tracking-tight text-gray-800 my-4 truncate lg:my-8">{{ $product->name }}</h4>
+                    <p class="leading-normal text-gray-700 text-2xl my-3">{{ $product->price }}</p>
                     <div class="flex">
                         <div class="w-1/2 text-start">
                             <p class="leading-normal text-gray-700 text-base my-2">{{ $product->user->name }}</p>
@@ -127,23 +127,21 @@
             @endforeach
         </div>
 
-        <h2 class="mb-32 mt-40 text-4xl text-center font-semibold text-slate-800 md:text-5xl">All Products</h2>
+        <h2 class="mb-24 mt-40 text-4xl text-center font-semibold text-slate-800 md:text-5xl">All Products</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3 md:px-6">
             @foreach ($products->skip(5) as $product)
-            <div class="w-full max-w-xs h-[30rem]  mx-auto mb-2 rounded-lg shadow-lg overflow-hidden bg-slate-100">
-                @foreach ($product->images as $images)
-                    <img class="w-full h-72"
-                    src="uploads/products/{{ $images->path }}"
+            <div class="w-full max-w-xs h-[32rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10">
+                <img class="w-full h-72"
+                    src="https://source.unsplash.com/300x400"
                     alt="product" />
-                @endforeach
                 <div class="px-6 py-4">
-                    <p class="leading-normal text-gray-700 text-sm font-semibold my-3">
+                    <p class="leading-normal text-gray-700 text-sm font-semibold my-4">
                         <span class="rounded-full bg-slate-300 py-1 px-2">
                             {{ $product->category->name }}
                         </span>
                     </p>
-                    <h4 class="text-lg font-semibold tracking-tight text-gray-800 my-2">{{ $product->name }}</h4>
-                    <p class="leading-normal text-gray-700 text-2xl my-2">Price</p>
+                    <h4 class="text-lg font-semibold tracking-tight text-gray-800 my-4 truncate">{{ $product->name }}</h4>
+                    <p class="leading-normal text-gray-700 text-2xl my-3">{{ $product->price }}</p>
                     <div class="flex">
                         <div class="w-1/2 text-start">
                             <p class="leading-normal text-gray-700 text-base my-2">{{ $product->user->name }}</p>
