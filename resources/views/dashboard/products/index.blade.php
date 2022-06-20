@@ -14,7 +14,7 @@
                     <div class="mx-auto w-1/2">
                         <a href="{{ route('products.create') }}" class="inline-block py-2 px-4 bg-red-400 rounded-full text-white">Add new product</a>
                     </div>
-                    <div class="mx-auto w-1/2 flex">
+                    <div class="w-full flex justify-end">
                         <form action="{{ route('products.index') }}" method="GET">
                             <input type="text" placeholder="Name" name="name"  class="py-2 px-4 rounded-full focus:placeholder:opacity-0 transition-all duration-500" value="{{ old('productName') ?? '' }}">
                             <button type="submit" class="py-2 px-4 bg-teal-400 rounded-full text-white">Search</button>

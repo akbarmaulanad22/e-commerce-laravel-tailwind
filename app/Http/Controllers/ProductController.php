@@ -8,13 +8,14 @@ use App\Models\Product;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Spatie\Permission\Models\Role;
 
 class ProductController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('role:Super user|Seller');
+        $this->middleware(Role::find(1), Role::find(2));
     }
     
     /**

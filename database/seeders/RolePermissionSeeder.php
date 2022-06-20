@@ -19,21 +19,21 @@ class RolePermissionSeeder extends Seeder
     public function run()
     {
         $role = [
-            Role::create(['name' => 'Super user']),
-            Role::create(['name' => 'Seller']),
-            Role::create(['name' => 'Buyer']),
+            Role::create(['name' => 'super-admin']),
+            Role::create(['name' => 'seller']),
+            Role::create(['name' => 'suyer']),
         ];
 
         $allPermissions = [
-            Permission::create(['name' => 'create product']),
-            Permission::create(['name' => 'read product']),
-            Permission::create(['name' => 'update product']),
-            Permission::create(['name' => 'delete product']),
-            Permission::create(['name' => 'buy product']),
-            Permission::create(['name' => 'create category']),
-            Permission::create(['name' => 'read category']),
-            Permission::create(['name' => 'update category']),
-            Permission::create(['name' => 'delete category']),
+            Permission::create(['name' => 'create-product']),
+            Permission::create(['name' => 'read-product']),
+            Permission::create(['name' => 'update-product']),
+            Permission::create(['name' => 'delete-product']),
+            Permission::create(['name' => 'buy-product']),
+            Permission::create(['name' => 'create-category']),
+            Permission::create(['name' => 'read-category']),
+            Permission::create(['name' => 'update-category']),
+            Permission::create(['name' => 'delete-category']),
         ];
 
         $role[0]->givePermissionTo($allPermissions);

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -43,7 +44,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole('Seller');
+        ])->assignRole(Role::find(3));
 
         $permissions = $user->getPermissionsViaRoles();
         $user->givePermissionTo($permissions);
@@ -52,6 +53,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($user->roles->first()->id == 1 || $user->roles->first()->id == 2) {
+            return redirect(RouteServiceProvider::DASHBOARD);
+        }
         return redirect(RouteServiceProvider::HOME);
     }
 }
