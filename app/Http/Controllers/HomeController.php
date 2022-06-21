@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,7 @@ class HomeController extends Controller
             $products = Product::latest()->paginate(20);
         }
 
-        return view('app', compact('products'));
+        $categories = Category::all();
+        return view('app', compact('products', 'categories'));
     }
 }

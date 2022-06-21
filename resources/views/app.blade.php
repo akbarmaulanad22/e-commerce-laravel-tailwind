@@ -90,18 +90,19 @@
         {{-- </div> --}}
     </nav>
     
-    {{-- search --}}
 
-    {{-- Product menu --}}
-    <div class="container mx-auto px-5 md:px-0 my-12">
+    <div class="container mx-auto px-5 md:px-0 my-12 justify-center">
+
+
+        {{-- Latest Products --}}
         <h2 class="mb-24 mt-14 text-4xl text-center  font-semibold text-slate-800 md:text-5xl">Latest Products</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 px-0 max-w-2xl mx-auto lg:max-w-none lg:px-16">
             @foreach ($products as $product)
-            @if ($loop->iteration === 6)
+            @if ($loop->index === 4)
                 @break
             @endif
             <div class="w-full max-w-xs h-[32rem] lg:h-[35rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10">
-                <img class="w-full h-72"
+                <img class="w-full h-72 object-cover"
                     src="https://source.unsplash.com/300x400"
                     alt="product" />
                 <div class="px-6 py-4">
@@ -127,20 +128,54 @@
             @endforeach
         </div>
 
+
+        {{-- category menu --}}
+        <h2 class="mb-24 mt-14 text-4xl text-center font-semibold text-slate-800 md:text-5xl">Category</h2>
+        {{-- <div class="container">
+            <div class="flex gap-4 justify-between w-full overflow-x-scroll px-0 max-w-2xl mx-auto lg:max-w-none lg:px-16">
+                @for($i=0;$i<10;$i++)
+                    <div class="aspect-square rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10 lg:scale-100">
+                        <div class="relative overflow-hidden">
+                                <img src="https://www.w3schools.com/howto/img_avatar2.png"alt="Avatar"class="object-cover w-full h-full"/>
+                                <div class="absolute w-full py-2.5 bottom-0 inset-x-0 bg-slate-800 text-white text-xs text-center leading-4">category</div>
+                        </div>
+                    </div>
+                @endfor
+            </div>
+        </div> --}}
+        
+        <div class="flex w-full justify-center">
+            <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 px-0 max-w-2xl mx-auto lg:max-w-none lg:px-16">
+                @foreach ($categories as $category)
+                @if ($loop->index === 6)
+                    @break
+                @endif
+                <div class="aspect-square rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10 lg:scale-100">
+                    <div class="relative overflow-hidden">
+                        <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar" class="object-cover w-full h-full" />
+                        <div class="absolute w-full py-2.5 bottom-0 inset-x-0 bg-slate-800 text-white text-xs text-center leading-4">{{ $category->name }}</div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+
+        {{-- all products --}}
         <h2 class="mb-24 mt-40 text-4xl text-center font-semibold text-slate-800 md:text-5xl">All Products</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3 md:px-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 px-0 max-w-2xl mx-auto lg:max-w-none lg:px-16">
             @foreach ($products->skip(5) as $product)
-            <div class="w-full max-w-xs h-[32rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10">
-                <img class="w-full h-72"
+            <div class="w-full max-w-xs h-[32rem] lg:h-[35rem] mx-auto rounded-lg shadow-lg overflow-hidden bg-slate-100 mb-10">
+                <img class="w-full h-72 object-cover"
                     src="https://source.unsplash.com/300x400"
                     alt="product" />
                 <div class="px-6 py-4">
-                    <p class="leading-normal text-gray-700 text-sm font-semibold my-4">
+                    <p class="leading-normal text-gray-700 text-sm font-semibold my-4 lg:my-6">
                         <span class="rounded-full bg-slate-300 py-1 px-2">
                             {{ $product->category->name }}
                         </span>
                     </p>
-                    <h4 class="text-lg font-semibold tracking-tight text-gray-800 my-4 truncate">{{ $product->name }}</h4>
+                    <h4 class="text-lg font-semibold tracking-tight text-gray-800 my-4 truncate lg:my-8">{{ $product->name }}</h4>
                     <p class="leading-normal text-gray-700 text-2xl my-3">{{ $product->price }}</p>
                     <div class="flex">
                         <div class="w-1/2 text-start">
