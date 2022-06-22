@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
         
                 Category::create([
                     'name' => 'Test Category',
+                    'slug' => 'test-category',
                 ]);
 
         //         DB::commit();
