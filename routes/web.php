@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+require __DIR__.'/auth.php';
 // Route::get('/', HomeController::class);
 Route::controller(HomeController::class)->group(function () {
     Route::get('/products', 'index')->name('products');
-    // Route::get('/products/{slug}/detail', 'detail')->name('product.detail');
+    Route::get('/products/{slug}/detail', 'detail')->name('product.detail');
     Route::get('/category/{slug}', 'showByCategory')->name('categories');
 });;
 
@@ -32,9 +33,9 @@ Route::group(['middleware' => ['auth', 'role:super-admin|seller'], 'prefix' => '
     });
 });
 
+
+
+
 Route::any('{any}', function (){
     return to_route('products');
 });
-
-
-require __DIR__.'/auth.php';
